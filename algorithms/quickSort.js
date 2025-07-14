@@ -1,24 +1,21 @@
-function quickSort(array, start = 0, end = array.length - 1) {
+function quickSort(nums) {
+    if (nums.length <= 1) return nums;
+    let pivotIndex = Math.floor(Math.random() * nums.length);
+    let pivot = nums[pivotIndex]
 
-    if (start >= end) return;
+    const left = [];
+    const right = [];
 
-    const pivot = array[end];
-    let next = start;
 
-    for (let i = start; i < end; ++i) {
-        if (array[i] < pivot) {
-            [array[i], array[next]] = [array[next], array[i]];
-            ++next;
+    for (let i = 0; i < nums.length; ++i) {
+        if (i === pivotIndex) continue; 
+        if (nums[i] < pivot) {
+            left.push(nums[i]);
+        } else {
+            right.push(nums[i]);
         }
     }
-
-    [array[end], array[next]] = [array[next], array[end]];
-
-    quickSort(array,start, next - 1);
-    quickSort(array,next + 1, end);
-
-    return array;
-
+    return [...quickSort(left), pivot, ...quickSort(right)];
 }
 
 module.exports = quickSort;
